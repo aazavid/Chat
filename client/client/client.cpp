@@ -76,7 +76,7 @@ private:
     }
     void on_clients(const std::string & msg) {
         std::string clients = msg.substr(8);
-        std::cout << username_ << ", new client list:" << clients;
+        std::cout << "clients to chat: " << clients;
     }
     void do_ask_clients() {
         write("ask_clients\n");

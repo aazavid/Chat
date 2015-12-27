@@ -95,6 +95,7 @@ private:
 		std::cout << username_ << " logged in. " << "ID: " << id_ << std::endl;
 		write("login ok\n");
 		update_clients_changed();
+		write_all("conect to chat new client: " + username_);
 	}
 	void on_ping() {
 		write(clients_changed_ ? "ping client_list_changed\n" : "ping ok\n");
