@@ -92,7 +92,7 @@ private:
 	void on_login(const std::string & msg) {
 		std::istringstream in(msg);
 		in >> username_ >> username_;
-		std::cout << username_ << " logged in" << std::endl;
+		std::cout << username_ << " logged in. " << "ID: " << id_ << std::endl;
 		write("login ok\n");
 		update_clients_changed();
 	}
