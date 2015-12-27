@@ -33,7 +33,7 @@ Possible requests:
 */
 struct talk_to_client : boost::enable_shared_from_this<talk_to_client> {
 	talk_to_client()
-		: sock_(service), started_(false), already_read_(0) {
+		: sock_(service), started_(false), already_read_(0), id_(rand() % 1000) {
 		last_ping = microsec_clock::local_time();
 	}
 	std::string username() const { return username_; }
@@ -118,7 +118,10 @@ private:
 		
 		//boost::recursive_mutex::scoped_lock lk(cs);
 		for (array::const_iterator b = clients.begin(), e = clients.end(); b != e; ++b)
+		{
+			if (((*b)->id_ == this->id_ )) continue;
 			(*b)->sock_.write_some(buffer(msg));
+		}
 	}
 private:
 	ip::tcp::socket sock_;
@@ -129,6 +132,7 @@ private:
 	std::string username_;
 	bool clients_changed_;
 	ptime last_ping;
+	int id_;
 };
 
 void update_clients_changed() {
