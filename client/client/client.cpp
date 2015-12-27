@@ -46,7 +46,7 @@ private:
 	
     void write_request() {
 		std::string msg;
-		std::cin >> msg;
+		std::getline(std::cin, msg);
 		write(username_ + ": " + msg + "\n");
     }
     void read_answer() {
