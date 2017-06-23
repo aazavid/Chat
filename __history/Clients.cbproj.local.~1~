@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<BorlandProject>
-  <Transactions>
-    <Transaction>2017.06.23 13:31:20.706,=C:\Users\user\Documents\RAD Studio\Projects\File1.cpp</Transaction>
-    <Transaction>2017.06.23 13:33:38.478,D:\Hobby\Chat\Client.cpp=C:\Users\user\Documents\RAD Studio\Projects\File1.cpp</Transaction>
-    <Transaction>2017.06.23 13:33:50.445,D:\Hobby\Chat\Clients.cbproj=C:\Users\user\Documents\RAD Studio\Projects\Project2.cbproj</Transaction>
-  </Transactions>
-</BorlandProject>
