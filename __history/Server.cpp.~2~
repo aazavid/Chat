@@ -1,16 +1,22 @@
+#pragma hdrstop
+#pragma argsused
 
-#ifdef WIN32
-#define _WIN32_WINNT 0x0501
+#include <tchar.h>
 #include <stdio.h>
-#endif
 
+#define BOOST_THREAD_USE_LIB
 
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>
 #include <boost/asio.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/enable_shared_from_this.hpp>
-	using namespace boost::asio;
+
+namespace boost {
+ void tss_cleanup_implemented() { }
+}
+
+using namespace boost::asio;
 using namespace boost::posix_time;
 io_service service;
 
@@ -116,7 +122,7 @@ private:
 	}
 	void write_all(const std::string & msg)
 	{
-		
+
 		//boost::recursive_mutex::scoped_lock lk(cs);
 		for (array::const_iterator b = clients.begin(), e = clients.end(); b != e; ++b)
 		{
@@ -167,10 +173,12 @@ void handle_clients_thread() {
 	}
 }
 
-int main(int argc, char* argv[]) {
-	boost::thread_group threads;
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+    	boost::thread_group threads;
 	threads.create_thread(accept_thread);
 	threads.create_thread(handle_clients_thread);
 	threads.join_all();
+	return 0;
 }
-

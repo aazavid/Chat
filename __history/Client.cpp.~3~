@@ -1,17 +1,27 @@
-#ifdef WIN32
-#define _WIN32_WINNT 0x0501
-#include <stdio.h>
-#endif
+#pragma hdrstop
+#pragma argsused
 
+#include <tchar.h>
+#include <stdio.h>
+
+#define BOOST_THREAD_USE_LIB
 
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>
 #include <boost/asio.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/enable_shared_from_this.hpp>
+
 #include <windows.h>
-#include<string>
-#include <conio.h>
+#include <string>
+#include<conio.h>
+
+
+extern "C" void tss_cleanup_implemented(void)
+{
+	//
+}
+
 using namespace boost::asio;
 io_service service;
 
@@ -24,7 +34,7 @@ io_service service;
     - ping: the server answers either with "ping ok" or "ping client_list_changed"
 */
 struct talk_to_svr {
-    talk_to_svr(const std::string & username) 
+    talk_to_svr(const std::string & username)
         : sock_(service), started_(true), username_(username) {}
     void connect(ip::tcp::endpoint ep) {
         sock_.connect(ep);
@@ -43,7 +53,7 @@ struct talk_to_svr {
     }
     std::string username() const { return username_; }
 private:
-	
+
     void write_request() {
 		std::string msg;
 		std::getline(std::cin, msg);
@@ -51,7 +61,7 @@ private:
     }
     void read_answer() {
         already_read_ = 0;
-        read(sock_, buffer(buff_), 
+        read(sock_, buffer(buff_),
              boost::bind(&talk_to_svr::read_complete, this, _1, _2));
         process_msg();
     }
@@ -71,7 +81,7 @@ private:
         std::istringstream in(msg);
         std::string answer;
         in >> answer >> answer;
-        if ( answer == "client_list_changed") 
+        if ( answer == "client_list_changed")
             do_ask_clients();
     }
     void on_clients(const std::string & msg) {
@@ -110,14 +120,15 @@ void run_client(const std::string & client_name) {
         client.connect(ep);
         client.loop();
     } catch(boost::system::system_error & err) {
-        std::cout << "client terminated " << client.username() 
+        std::cout << "client terminated " << client.username()
                   << ": " << err.what() << std::endl;
     }
 }
 
-int main(int argc, char* argv[]) {
-    
-	std::string name;
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+		std::string name;
 	std::cin >> name;
 	boost::thread threads( boost::bind(run_client, name));
     boost::this_thread::sleep( boost::posix_time::millisec(100));
