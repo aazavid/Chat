@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>1899.12.30 00:00:00.000.445,C:\Users\user\Documents\RAD Studio\Projects\Project2.cbproj=D:\Hobby\Chat\Clients.cbproj</Transaction>
-    <Transaction>1899.12.30 00:00:00.000.478,C:\Users\user\Documents\RAD Studio\Projects\File1.cpp=D:\Hobby\Chat\Client.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.445,D:\Hobby\Chat\Clients.cbproj=C:\Users\user\Documents\RAD Studio\Projects\Project2.cbproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.478,D:\Hobby\Chat\Client.cpp=C:\Users\user\Documents\RAD Studio\Projects\File1.cpp</Transaction>
     <Transaction>1899.12.30 00:00:00.000.706,=C:\Users\user\Documents\RAD Studio\Projects\File1.cpp</Transaction>
   </Transactions>
 </BorlandProject>

@@ -27,6 +27,8 @@ struct talk_to_client;
 typedef boost::shared_ptr<talk_to_client> client_ptr;
 typedef std::vector<client_ptr> array;
 array clients;
+const int MAX_HISTORY_SIZE = 20;
+
 // thread-safe access to clients array
 boost::recursive_mutex cs;
 
@@ -103,6 +105,8 @@ private:
 		in >> username_ >> username_;
 		std::cout << username_ << " logged in. " << "ID: " << id_ << std::endl;
 		write("login ok\n");
+		for(int i = 0; i < MAX_HISTORY_SIZE - 1; ++i)
+		  write(history_[i]);
 		update_clients_changed();
 		write_all("conect to chat new client: " + username_);
 	}
@@ -125,6 +129,9 @@ private:
 	}
 	void write_all(const std::string & msg)
 	{
+		 static int count_buff = MAX_HISTORY_SIZE - 1;
+		 if(count_buff == 0){count_buff = MAX_HISTORY_SIZE - 1;}
+		 history_[--count_buff] = msg;
 
 		//boost::recursive_mutex::scoped_lock lk(cs);
 		for (array::const_iterator b = clients.begin(), e = clients.end(); b != e; ++b)
@@ -140,6 +147,7 @@ private:
 	char buff_[max_msg];
 	bool started_;
 	std::string username_;
+	std::string history_[MAX_HISTORY_SIZE];
 	bool clients_changed_;
 	ptime last_ping;
 	int id_;
